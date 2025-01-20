@@ -1,13 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt #2</title>
+    <title>Personlig Träning</title>
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
-  <h1>Webbserverprogrammering 1 - Projekt 3 - mall</h1>
-  <img src="/img/glhf.png">
+    <header>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="index.erb">Hem</a></li>
+                <li><a href="login.erb">Logga in</a></li>
+                <li><a href="program.erb">Träningsprogram</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?height=400&width=400" alt="Träningsbild 1">
+                <div class="hero-text">Styrka</div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/221210/pexels-photo-221210.jpeg?height=400&width=400" alt="Träningsbild 2">
+                <div class="hero-text">Uthållighet</div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?height=400&width=400" alt="Träningsbild 3">
+                <div class="hero-text">Flexibilitet</div>
+            </div>
+        </section>
+
+        <section class="info">
+            <img src="https://images.pexels.com/photos/2204196/pexels-photo-2204196.jpeg?height=400&width=600" alt="Informationsbild">
+            <div class="info-text">
+                <h2>Personlig Träning</h2>
+                <p>Vi erbjuder skräddarsydda träningsprogram för att hjälpa dig nå dina mål. Våra erfarna tränare arbetar nära dig för att säkerställa din framgång.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Personlig Träning. Alla rättigheter förbehållna.</p>
+    </footer>
+
+    <script src="/script.js?<%=Time.now.to_i%>"></script>
 </body>
 </html>

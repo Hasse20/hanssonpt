@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logga in - Personlig Träning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+</head>
+<body>
+    <header>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="index.erb">Hem</a></li>
+                <li><a href="login.erb">Logga in</a></li>
+                <li><a href="program.erb">Träningsprogram</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-main">
+        <div class="login-container">
+            <h2>Logga in</h2>
+            <form>
+                <input type="text" placeholder="Användarnamn" required>
+                <input type="password" placeholder="Lösenord" required>
+                <button type="submit">Logga in</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Personlig Träning. Alla rättigheter förbehållna.</p>
+    </footer>
+
+    <script src="/script.js?<%=Time.now.to_i%>"></script>
+</body>
+</html>
