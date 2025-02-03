@@ -4,48 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personlig Träning</title>
-    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            top: -80px;
+            transition: top 0.3s;
+            z-index: 1000;
+        }
+
+        nav {
+            padding: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .hero-image {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+        }
+
+        .hero-image:hover .overlay {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .info-section {
+            display: flex;
+            align-items: center;
+            padding: 5rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .info-image {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .info-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-text {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .hero-image {
+                height: 33.33vh;
+            }
+
+            .hero-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .info-section {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav id="main-nav">
+        <nav>
             <ul>
-                <li><a href="index.erb">Hem</a></li>
-                <li><a href="login.erb">Logga in</a></li>
-                <li><a href="program.erb">Träningsprogram</a></li>
+                <li><a href="/">Hem</a></li>
+                <li><a href="/login">Logga in</a></li>
+                <li><a href="/program">Träningsprogram</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-image">
-                <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?height=400&width=400" alt="Träningsbild 1">
-                <div class="hero-text">Styrka</div>
+    <section class="hero">
+        <div class="hero-image">
+            <div class="overlay"></div>
+            <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg" alt="Styrketräning">
+            <div class="hero-text">
+                <h2>Styrka</h2>
+                <p>Bygg din styrka</p>
             </div>
-            <div class="hero-image">
-                <img src="https://images.pexels.com/photos/221210/pexels-photo-221210.jpeg?height=400&width=400" alt="Träningsbild 2">
-                <div class="hero-text">Uthållighet</div>
+        </div>
+        <div class="hero-image">
+            <div class="overlay"></div>
+            <img src="https://images.pexels.com/photos/221210/pexels-photo-221210.jpeg" alt="Flexibilitet">
+            <div class="hero-text">
+                <h2>Flexibilitet</h2>
+                <p>Förbättra din rörlighet</p>
             </div>
-            <div class="hero-image">
-                <img src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?height=400&width=400" alt="Träningsbild 3">
-                <div class="hero-text">Flexibilitet</div>
+        </div>
+        <div class="hero-image">
+            <div class="overlay"></div>
+            <img src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg" alt="Uthållighet">
+            <div class="hero-text">
+                <h2>Uthållighet</h2>
+                <p>Öka din kondition</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="info">
-            <img src="https://images.pexels.com/photos/2204196/pexels-photo-2204196.jpeg?height=400&width=600" alt="Informationsbild">
-            <div class="info-text">
-                <h2>Personlig Träning</h2>
-                <p>Vi erbjuder skräddarsydda träningsprogram för att hjälpa dig nå dina mål. Våra erfarna tränare arbetar nära dig för att säkerställa din framgång.</p>
-            </div>
-        </section>
-    </main>
+    <section class="info-section">
+        <div class="info-image">
+            <img src="https://images.pexels.com/photos/2204196/pexels-photo-2204196.jpeg" alt="Personlig träning">
+        </div>
+        <div class="info-text">
+            <h2>Personlig Träning</h2>
+            <p>Vi erbjuder skräddarsydda träningsprogram anpassade efter dina mål och förutsättningar. Våra erfarna tränare guidar dig genom hela resan mot en starkare och hälsosammare livsstil.</p>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2023 Personlig Träning. Alla rättigheter förbehållna.</p>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            let lastScrollY = window.scrollY;
 
-    <script src="/script.js?<%=Time.now.to_i%>"></script>
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    if (window.scrollY > lastScrollY) {
+                        header.style.top = '0';
+                    } else {
+                        header.style.top = '-80px';
+                    }
+                }
+                lastScrollY = window.scrollY;
+            });
+        });
+    </script>
 </body>
 </html>

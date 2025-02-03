@@ -4,4 +4,11 @@ class App < Sinatra::Base
         erb(:"index")
     end
 
+    get '/login' do
+        erb(:"login")
+    end
+
+    get '/program' do
+        erb(:"program")
+    end
 end

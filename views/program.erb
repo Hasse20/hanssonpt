@@ -4,27 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Träningsprogram - Personlig Träning</title>
-    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: #f8f8f8;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            top: -80px;
+            transition: top 0.3s;
+            z-index: 1000;
+        }
+
+        nav {
+            padding: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .program-container {
+            padding-top: 80px; /* Space for fixed header */
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem 2rem;
+        }
+
+        .program-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .program-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .program-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .program-container {
+                padding: 4rem 1rem 1rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav id="main-nav">
+        <nav>
             <ul>
-                <li><a href="index.erb">Hem</a></li>
-                <li><a href="login.erb">Logga in</a></li>
-                <li><a href="program.erb">Träningsprogram</a></li>
+                <li><a href="index.html">Hem</a></li>
+                <li><a href="login.html">Logga in</a></li>
+                <li><a href="program.html">Träningsprogram</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- Innehåll för träningsprogram kommer här -->
+    <main class="program-container">
+        <div class="program-header">
+            <h1>Träningsprogram</h1>
+        </div>
+        <div class="program-content">
+            <!-- Empty content area for you to customize -->
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2023 Personlig Träning. Alla rättigheter förbehållna.</p>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            let lastScrollY = window.scrollY;
 
-    <script src="/script.js?<%=Time.now.to_i%>"></script>
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    if (window.scrollY > lastScrollY) {
+                        header.style.top = '0';
+                    } else {
+                        header.style.top = '-80px';
+                    }
+                }
+                lastScrollY = window.scrollY;
+            });
+        });
+    </script>
 </body>
 </html>
