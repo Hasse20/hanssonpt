@@ -28,6 +28,18 @@ class App < Sinatra::Base
     erb :index
   end
 
+  get '/index.html' do
+    erb :index
+  end
+
+  get '/index' do
+    erb :index
+  end
+
+  get '/login.html' do
+    erb :login
+  end
+
   get '/login' do
     erb :login
   end
@@ -44,9 +56,19 @@ class App < Sinatra::Base
       flash[:error] = "Fel användarnamn eller lösenord"
       redirect '/login'
     end
+    if user_authenticated?
+      session[:user_id] = user.id
+      redirect '/'  # Ladda om startsidan eller en dashboard
+    else
+      redirect '/login'  # Om det misslyckas, skicka tillbaka till login-sidan
+    end
   end
 
   get '/register' do
+    erb :register
+  end
+
+  get '/register.html' do
     erb :register
   end
 
@@ -62,14 +84,22 @@ class App < Sinatra::Base
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
+    if user_created?
+      session[:user_id] = user.id
+      puts session[:username]
+      redirect '/'  # Ladda om startsidan eller en dashboard
+    else
+      redirect '/register'  # Om det misslyckas, skicka tillbaka till register-sidan
+    end
   end
 
-  get '/program' do
+  get '/program.html' do
+    @username = session[:username]  # Hämta inloggade användarens namn
     erb :program
   end
 
   get '/program' do
-    redirect '/login' unless session[:user_id]
+    @username = session[:username]  # Hämta inloggade användarens namn
     erb :program
   end
 

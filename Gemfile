@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
 
+gem 'bcrypt'
 gem 'rack'
 gem 'rackup'
 gem 'sinatra'
+gem 'sinatra-flash' 
 gem 'rerun'
 gem 'sqlite3'
 gem 'webrick'
+gem 'rake'

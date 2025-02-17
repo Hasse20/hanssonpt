@@ -14,7 +14,7 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: 130vh;
             background: #f8f8f8;
         }
 
@@ -73,6 +73,13 @@
             min-height: 500px;
         }
 
+        .program-card {
+            background: #e3e3e3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
         @media (max-width: 768px) {
             .program-container {
                 padding: 4rem 1rem 1rem 1rem;
@@ -96,7 +103,19 @@
             <h1>Träningsprogram</h1>
         </div>
         <div class="program-content">
-            <!-- Empty content area for you to customize -->
+            <% if @username == "hasse" %>
+                <div class="program-card">
+                    <h2>Stronglifts 5x5</h2>
+                    <p>Ett enkelt och effektivt styrketräningsprogram med fokus på basövningar.</p>
+                    <ul>
+                        <li><strong>Pass A:</strong> Knäböj, Bänkpress, Skivstångsrodd</li>
+                        <li><strong>Pass B:</strong> Knäböj, Militärpress, Marklyft</li>
+                        <li>Träna 3 gånger i veckan, varva pass A och B.</li>
+                    </ul>
+                </div>
+            <% else %>
+                <p>Logga in för att se ditt träningsprogram.</p>
+            <% end %>
         </div>
     </main>
 

@@ -12,3 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollTop = scrollTop;
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/program')  // Hämta sidan igen för att ladda rätt innehåll
+      .then(response => response.text())
+      .then(html => {
+          document.body.innerHTML = html;
+      });
+});
