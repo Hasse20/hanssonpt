@@ -79,7 +79,6 @@ class App < Sinatra::Base
     begin
       db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", [params[:username], hashed_password])
       flash[:success] = "Registrering lyckades! Logga in nu."
-      redirect '/login'
     rescue SQLite3::ConstraintException
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
