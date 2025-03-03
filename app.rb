@@ -79,11 +79,12 @@ class App < Sinatra::Base
     begin
       db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", [params[:username], hashed_password])
       flash[:success] = "Registrering lyckades! Logga in nu."
+      user_created = true
     rescue SQLite3::ConstraintException
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
-    if user_created?
+    if user_created
       session[:user_id] = user.id
       puts session[:username]
       redirect '/'  # Ladda om startsidan eller en dashboard
