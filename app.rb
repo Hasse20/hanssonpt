@@ -25,14 +25,25 @@ class App < Sinatra::Base
   end
 
   get '/' do
+    if session[:user_id]
+      @login = true
+    else
+      @login = false
     erb :index
-  end
 
   get '/index.html' do
+    if session[:user_id]
+      @login = true
+    else
+      @login = false
     erb :index
   end
 
   get '/index' do
+    if session[:user_id]
+      @login = true
+    else
+      @login = false
     erb :index
   end
 
@@ -75,17 +86,20 @@ class App < Sinatra::Base
   post '/register' do
     db = db_connection
     hashed_password = BCrypt::Password.create(params[:password])
+    user_name = params[:username]
 
     begin
-      db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", [params[:username], hashed_password])
+      db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", [user_name, hashed_password])
       flash[:success] = "Registrering lyckades! Logga in nu."
       user_created = true
+      # hämta användarens id du nyss skapa fån d
+      user_id = db.execute("SELECT id FROM users WHERE username = ?", [user_name]).first
     rescue SQLite3::ConstraintException
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
     if user_created
-      session[:user_id] = user.id
+      session[:user_id] = user_id
       puts session[:username]
       redirect '/'  # Ladda om startsidan eller en dashboard
     else
