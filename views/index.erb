@@ -154,7 +154,7 @@
         <nav>
             <ul>
                 <li><a href="/">Hem</a></li>
-                 <% if @login = false %> 
+                 <% if user_authenticated? == false %> FIXA NÄSTA GÅNG
                  <li><a href="/login">Logga in</a></li>
                  <% end %>
                 <li><a href="/program">Träningsprogram</a></li>

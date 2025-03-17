@@ -7,6 +7,14 @@ class App < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
+  def user_authenticated?
+    if session[:user_id]
+      return true
+    else
+      return false
+    end
+  end
+
   def db_connection
     db = SQLite3::Database.new "users.db"
     db.results_as_hash = true
@@ -25,25 +33,18 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    if session[:user_id]
-      @login = true
+    if user_authenticated?
+      erb :index
     else
-      @login = false
-    erb :index
+      redirect("/login")
+    end
+  end
 
   get '/index.html' do
-    if session[:user_id]
-      @login = true
-    else
-      @login = false
     erb :index
   end
 
   get '/index' do
-    if session[:user_id]
-      @login = true
-    else
-      @login = false
     erb :index
   end
 
@@ -123,5 +124,5 @@ class App < Sinatra::Base
     redirect '/login'
   end
 
-  run! if app_file == $0
+ #run! if app_file == $0
 end
