@@ -94,7 +94,7 @@ class App < Sinatra::Base
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
-    if user_created?
+    if user_authenticated?
       session[:user_id] = user_id
       puts session[:username]
       redirect '/'  # Ladda om startsidan eller en dashboard
