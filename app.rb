@@ -68,12 +68,7 @@ class App < Sinatra::Base
       flash[:error] = "Fel användarnamn eller lösenord"
       redirect '/login'
     end
-    if user_authenticated?
-      session[:user_id] = user.id
-      redirect '/'  # Ladda om startsidan eller en dashboard
-    else
-      redirect '/login'  # Om det misslyckas, skicka tillbaka till login-sidan
-    end
+
   end
 
   get '/register' do
@@ -99,7 +94,7 @@ class App < Sinatra::Base
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
-    if user_created
+    if user_created?
       session[:user_id] = user_id
       puts session[:username]
       redirect '/'  # Ladda om startsidan eller en dashboard

@@ -103,7 +103,7 @@
             <h1>Träningsprogram</h1>
         </div>
         <div class="program-content">
-            <% if @username == "hasse" %>
+            <% if user_authenticated? %>
                 <div class="program-card">
                     <h2>Stronglifts 5x5</h2>
                     <p>Ett enkelt och effektivt styrketräningsprogram med fokus på basövningar.</p>
