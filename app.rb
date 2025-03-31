@@ -26,8 +26,20 @@ class App < Sinatra::Base
     end
   end
 
-  get '/index' do
+  get '/' do
     erb :index
+  end
+
+
+
+  get '/programs/new' do
+    erb :'programs/new'
+  end
+
+  post '/programs' do
+    params.inspect
+    #todo: spara program till databasen
+    #todo: redirect http://localhost:9292/programs
   end
 
   get '/login' do

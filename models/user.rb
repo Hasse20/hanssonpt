@@ -30,16 +30,14 @@ class User
     return nil unless user
 
     if BCrypt::Password.new(user["password_digest"]) == password
-      return user # Returnerar en hash med användardata
+      return user
     else
       return nil
     end
   end
 end
 
-# Se till att tabellen finns
 User.create_table
-
 
 #fixa så att models funkar med mvc https://docs.google.com/presentation/d/169X-K4eIaVhN62ldELxkTEpQfYYXCqTXosxZKNYynuA/edit#slide=id.g34184975a14_0_0
 #fixa orm mha user klassen
