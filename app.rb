@@ -8,49 +8,26 @@ class App < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
-  def user_authenticated?
-    if session[:user_id]
-      return true
-    else
-      return false
+  helpers do
+    def user_authenticated?
+      !!session[:user_id]
     end
   end
 
-  def db_connection
-    db = SQLite3::Database.new "users.db"
-    db.results_as_hash = true
-    return db
-  end
-
   configure do
-    db = SQLite3::Database.new "users.db"
-    db.execute <<-SQL
-      CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        password_digest TEXT
-      );
-    SQL
+    User.create_table  # Säkerställ att tabellen finns
   end
 
   get '/' do
     if user_authenticated?
       erb :index
     else
-      redirect("/login")
+      redirect "/login"
     end
-  end
-
-  get '/index.html' do
-    erb :index
   end
 
   get '/index' do
     erb :index
-  end
-
-  get '/login.html' do
-    erb :login
   end
 
   get '/login' do
@@ -58,72 +35,43 @@ class App < Sinatra::Base
   end
 
   post '/login' do
-    #db = db_connection
-    #user = db.execute("SELECT * FROM users WHERE username = ?", [params[:username]]).first
-
-    user = User.login(params[:username])
+    user = User.login(params[:username], params[:password])
 
     if user
-      session[:user_id] = user.id
-      flash[:success] = "Välkommen, #{params[:username]}!"
+      session[:user_id] = user["id"]
+      session[:username] = user["username"]
+      flash[:success] = "Välkommen, #{user['username']}!"
       redirect '/program'
     else
       flash[:error] = "Fel användarnamn eller lösenord"
       redirect '/login'
     end
-
-
-    #if user && BCrypt::Password.new(user['password_digest']) == params[:password]
-    #  session[:user_id] = user['id']
-    #  flash[:success] = "Välkommen, #{params[:username]}!"
-    #  redirect '/program'
-    #else
-    #  flash[:error] = "Fel användarnamn eller lösenord"
-    #  redirect '/login'
-    #end
-
   end
 
   get '/register' do
     erb :register
   end
 
-  get '/register.html' do
-    erb :register
-  end
-
   post '/register' do
-    db = db_connection
-    hashed_password = BCrypt::Password.create(params[:password])
-    user_name = params[:username]
+    user_created = User.register(params[:username], params[:password])
 
-    begin
-      db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", [user_name, hashed_password])
+    if user_created
       flash[:success] = "Registrering lyckades! Logga in nu."
-      user_created = true
-      # hämta användarens id du nyss skapa fån d
-      user_id = db.execute("SELECT id FROM users WHERE username = ?", [user_name]).first
-    rescue SQLite3::ConstraintException
+      redirect '/login'
+    else
       flash[:error] = "Användarnamnet är redan taget."
       redirect '/register'
     end
-    if user_authenticated?
-      session[:user_id] = user_id
-      puts session[:username]
-      redirect '/'  # Ladda om startsidan eller en dashboard
-    else
-      redirect '/register'  # Om det misslyckas, skicka tillbaka till register-sidan
-    end
-  end
-
-  get '/program.html' do
-    @username = session[:username]  # Hämta inloggade användarens namn
-    erb :program
   end
 
   get '/program' do
-    @username = session[:username]  # Hämta inloggade användarens namn
-    erb :program
+    if user_authenticated?
+      @username = session[:username]
+      erb :program
+    else
+      flash[:error] = "Du måste vara inloggad för att se denna sida."
+      redirect '/login'
+    end
   end
 
   get '/logout' do
@@ -131,6 +79,4 @@ class App < Sinatra::Base
     flash[:success] = "Du har loggats ut."
     redirect '/login'
   end
-
- #run! if app_file == $0
 end
