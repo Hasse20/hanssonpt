@@ -39,7 +39,10 @@ class App < Sinatra::Base
   post '/programs' do
     params.inspect
     #todo: spara program till databasen
+    DB.execute("INSERT INTO programs (program) VALUES (?)", [params])
     #todo: redirect http://localhost:9292/programs
+    redirect "/programs"
+
   end
 
   get '/login' do
