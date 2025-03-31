@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/flash'
 require 'sqlite3'
 require 'bcrypt'
+require_relative "models/user"
 
 class App < Sinatra::Base
   enable :sessions
@@ -57,17 +58,29 @@ class App < Sinatra::Base
   end
 
   post '/login' do
-    db = db_connection
-    user = db.execute("SELECT * FROM users WHERE username = ?", [params[:username]]).first
+    #db = db_connection
+    #user = db.execute("SELECT * FROM users WHERE username = ?", [params[:username]]).first
 
-    if user && BCrypt::Password.new(user['password_digest']) == params[:password]
-      session[:user_id] = user['id']
+    user = User.login(params[:username])
+
+    if user
+      session[:user_id] = user.id
       flash[:success] = "Välkommen, #{params[:username]}!"
       redirect '/program'
     else
       flash[:error] = "Fel användarnamn eller lösenord"
       redirect '/login'
     end
+
+
+    #if user && BCrypt::Password.new(user['password_digest']) == params[:password]
+    #  session[:user_id] = user['id']
+    #  flash[:success] = "Välkommen, #{params[:username]}!"
+    #  redirect '/program'
+    #else
+    #  flash[:error] = "Fel användarnamn eller lösenord"
+    #  redirect '/login'
+    #end
 
   end
 
