@@ -117,6 +117,10 @@
             <% else %>
                 <p>Logga in för att se ditt träningsprogram.</p>
             <% end %>
+            <%  if session[:username] == "admin" %>
+             <p><a href="/programs/new">Klicka här för att redigera programs</a></p>
+            <% end %>
+
         </div>
     </main>
 
